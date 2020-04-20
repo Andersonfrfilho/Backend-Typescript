@@ -1,0 +1,12 @@
+## typeorm
+
+1 - create migration
+  - yarn typeorm migration:create -n name_migration
+2 - run migration
+  - yarn typeorm migration:run
+3 - revert migration
+  - yarn typeorm migration:revert
+4 - show migration
+  - yarn typeorm migration:show
+====================================================
+
