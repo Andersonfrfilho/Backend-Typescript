@@ -1,16 +1,17 @@
 import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
-import Appointment from '../models/Appointments';
+import Appointment from '../models/Appointment';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import AppError from '../errors/AppError';
 // DTO
 interface Request {
-  provider: string;
+  provider_id: string;
   date: Date;
 }
 // Dependency Inversion (SOLID)
 
 class CreateAppointmentService {
-  public async execute({ date, provider }: Request): Promise<Appointment> {
+  public async execute({ date, provider_id }: Request): Promise<Appointment> {
     // regra de negócio
     const appointmentsRepository = getCustomRepository(AppointmentsRepository);
 
@@ -20,11 +21,11 @@ class CreateAppointmentService {
     );
 
     if (findAppointmentInSameDate) {
-      throw Error('This appointment is already booked');
+      throw new AppError('This appointment is already booked', 400);
     }
     // cria a instancia
     const appointment = appointmentsRepository.create({
-      provider,
+      provider_id,
       date: appointmentDate,
     });
     // salva a instancia
