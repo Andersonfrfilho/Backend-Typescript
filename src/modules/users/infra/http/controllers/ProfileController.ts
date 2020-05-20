@@ -4,14 +4,14 @@ import { container } from 'tsyringe';
 // DTO - Data transfer object
 import UpdateProfileService from '@modules/users/services/UpdateProfileService';
 import ShowProfileService from '@modules/users/services/ShowProfileService';
+import { classToClass } from 'class-transformer';
 
 export default class ProfileService {
   public async show(request: Request, response: Response): Promise<Response> {
     const user_id = request.user.id;
     const showProfile = container.resolve(ShowProfileService);
     const user = await showProfile.execute({ user_id });
-    delete user.password;
-    return response.json(user);
+    return response.json(classToClass(user));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -25,7 +25,6 @@ export default class ProfileService {
       old_password,
       password,
     });
-    delete user.password;
-    return response.send(user);
+    return response.send(classToClass(user));
   }
 }
