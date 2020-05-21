@@ -1,4 +1,4 @@
-import IStorageProvider from '../models/IStorageProvider';
+import IStorageProvider from '../models/IStorageProviders';
 
 class FakeStorageProvider implements IStorageProvider {
   private storage: string[] = [];
