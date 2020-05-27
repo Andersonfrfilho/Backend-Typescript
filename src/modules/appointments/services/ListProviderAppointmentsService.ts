@@ -32,8 +32,8 @@ class ListProviderAppointmentsService {
     let appointments = await this.cacheProvider.recover<Appointment[]>(
       cacheKey,
     );
-
     if (!appointments) {
+      console.log('foi ao banco buscar');
       appointments = await this.appointmentsRepository.findAllInDayFromProvider(
         {
           provider_id,
