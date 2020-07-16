@@ -48,5 +48,15 @@ jobs:
         target: "~/app/node-deploy" 
     
     # Executar yarn na Digital Ocean
-    # Executar as migrations do typeorm
-    # restart no servidor nodejs
+    - name: Install dependencies on Digital Ocean
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: | 
+          cd ~/app/node-deploy
+          yarn
+          ./node_modules/.bin
+          pm2 restart gobarber-api
